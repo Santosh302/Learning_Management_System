@@ -43,7 +43,7 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ['USER', 'ADMIN'],
+      enum: ['USER','ADMIN'],
       default: 'USER',
     },
     forgotPasswordToken: String,
@@ -70,6 +70,7 @@ userSchema.methods = {
 
   // Will generate a JWT token with user id as payload
   generateJWTToken: async function () {
+    console.log("jwt expiry", process.env.JWT_EXPIRY)
     return await jwt.sign(
       { id: this._id, role: this.role, subscription: this.subscription },
       process.env.JWT_SECRET,
